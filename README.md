@@ -17,10 +17,10 @@ python3 demo.py
 
 ## 容器运行
 
-本地需已存在 `python:3.11.14-slim-bookworm` 镜像。构建不下载依赖，运行只访问容器内环回服务。
+首次构建拉取摘要固定的官方 Python 镜像并安装锁定的构建工具；运行不访问外网，只使用容器内环回服务。
 
 ```sh
-docker build --network=none -t mail-intake:local .
+docker build -t mail-intake:local .
 docker run --rm --network=none mail-intake:local
 docker run --rm --network=none mail-intake:local python3 -m unittest discover -s tests -v
 ```
