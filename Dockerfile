@@ -1,0 +1,5 @@
+FROM python:3.11.14-slim-bookworm
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /app
+COPY . /app
+CMD ["python3", "demo.py"]
