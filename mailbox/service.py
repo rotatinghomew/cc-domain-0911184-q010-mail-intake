@@ -23,6 +23,7 @@ class MailState:
         self.messages = {1: sample_message()}
         self.deleted = set()
         self.interrupt_uid = None
+        self.delete_after_search = set()
         self.commands = []
         self.lock = threading.RLock()
 
@@ -79,6 +80,8 @@ def serve(state=None):
                         minimum = int(criterion.group(1)) if criterion else 1
                         identifiers = [str(uid) for uid in sorted(state.messages) if uid >= minimum and uid not in state.deleted]
                         self.line('* SEARCH ' + ' '.join(identifiers))
+                        gone = [int(uid) for uid in identifiers if int(uid) in state.delete_after_search]
+                        state.deleted.update(gone)
                     elif action.upper() == 'FETCH':
                         uid = int(rest.split()[0])
                         if uid not in state.messages or uid in state.deleted:
