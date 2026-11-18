@@ -4,13 +4,14 @@
 
 ## 运行环境
 
-CPython 3.11 系列，仅依赖标准库；没有需要安装的 Python 包或外部数据库。Docker 基础镜像以 SHA256 摘要固定，容器内为 3.11.14；标准库接口也支持平台的 3.11.2。
+CPython 3.11 系列，业务运行仅依赖标准库，无外部数据库。构建工具精确锁定在 requirements-build.txt；先执行 python3 -m pip install -r requirements-build.txt。Docker 基础镜像以 SHA256 摘要固定，容器内为 3.11.14；标准库接口也支持平台的 3.11.2。
 
 ## 本地运行
 
 ```sh
 python3 -m unittest discover -s tests -v
 python3 -m compileall -q .
+python3 -m build --wheel --no-isolation
 python3 demo.py
 ```
 
